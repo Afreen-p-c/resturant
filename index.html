@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>L'Élite | Signature Dining</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@200;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --gold: #C5A059;
+            --dark-bg: #0A0A0A;
+            --glass: rgba(255, 255, 255, 0.03);
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            color: #E0E0E0;
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        .luxury-serif { font-family: 'Cinzel', serif; }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #000; }
+        ::-webkit-scrollbar-thumb { background: var(--gold); }
+
+        /* Hero Background with Overlay */
+        .hero-overlay {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
+                        url('https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* Gold Gradient Text */
+        .gold-gradient {
+            background: linear-gradient(to right, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Card Hover Effects */
+        .menu-card {
+            background: var(--glass);
+            border: 1px solid rgba(197, 160, 89, 0.1);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(10px);
+        }
+
+        .menu-card:hover {
+            border-color: var(--gold);
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(197, 160, 89, 0.1);
+        }
+
+        /* Button Styling */
+        .btn-gold {
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            transition: 0.4s;
+        }
+
+        .btn-gold:hover {
+            background: var(--gold);
+            color: black;
+            box-shadow: 0 0 20px rgba(197, 160, 89, 0.4);
+        }
+
+        /* Cart Sidebar Slide */
+        #cart-sidebar {
+            transition: transform 0.6s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade { animation: fadeIn 1.2s ease forwards; }
+    </style>
+</head>
+<body>
+
+    <nav class="fixed w-full z-50 bg-black/90 border-b border-[#C5A059]/30 px-6 py-4 flex justify-between items-center backdrop-blur-lg">
+        <div class="luxury-serif text-2xl tracking-[0.2em] gold-gradient font-bold cursor-pointer">L'ÉLITE</div>
+        <div class="flex items-center space-x-10 text-xs tracking-widest uppercase">
+            <a href="#home" class="hover:text-[#C5A059] transition">The Experience</a>
+            <a href="#menu" class="hover:text-[#C5A059] transition">Cuisine</a>
+            <button onclick="toggleCart()" class="relative flex items-center space-x-2 border-l border-white/20 pl-6">
+                <span class="text-[10px] gold-gradient">CART</span>
+                <span id="cart-count" class="bg-[#C5A059] text-black rounded-full h-5 w-5 flex items-center justify-center font-bold">0</span>
+            </button>
+        </div>
+    </nav>
+
+    <section id="home" class="hero-overlay h-screen flex flex-col justify-center items-center text-center px-4">
+        <div class="animate-fade">
+            <h3 class="tracking-[0.5em] text-sm uppercase mb-6 opacity-80">Culinary Excellence Since 1924</h3>
+            <h1 class="luxury-serif text-6xl md:text-8xl mb-8 gold-gradient">Fine Dining <br> Redefined</h1>
+            <div class="w-24 h-[1px] bg-[#C5A059] mx-auto mb-10"></div>
+            <a href="#menu" class="btn-gold px-12 py-4 tracking-[0.3em] uppercase text-xs">Explore the Menu</a>
+        </div>
+    </section>
+
+    <section id="menu" class="py-32 px-6 lg:px-20 relative">
+        <div class="text-center mb-20">
+            <h2 class="luxury-serif text-4xl mb-4 gold-gradient">The Menu</h2>
+            <p class="text-gray-500 italic">Chef de Cuisine: Marcelle Von-Droush</p>
+        </div>
+
+        <div id="menu-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 max-w-7xl mx-auto">
+            </div>
+    </section>
+
+    <div id="cart-sidebar" class="fixed right-0 top-0 h-full w-full md:w-96 bg-[#0a0a0a] border-l border-[#C5A059]/40 z-[100] translate-x-full shadow-2xl p-8 flex flex-col">
+        <div class="flex justify-between items-center mb-12 border-b border-white/10 pb-6">
+            <h4 class="luxury-serif text-2xl gold-gradient">Your Order</h4>
+            <button onclick="toggleCart()" class="text-3xl text-[#C5A059] hover:rotate-90 transition-transform duration-300">&times;</button>
+        </div>
+        
+        <div id="cart-items" class="flex-grow overflow-y-auto space-y-6">
+            </div>
+
+        <div class="border-t border-white/10 pt-8 mt-6">
+            <div class="flex justify-between text-lg mb-8 uppercase tracking-widest">
+                <span>Total Expenditure</span>
+                <span id="cart-total" class="gold-gradient font-bold">$0.00</span>
+            </div>
+            <button class="w-full bg-[#C5A059] text-black py-5 luxury-serif tracking-widest font-bold hover:bg-[#b38b4a] transition uppercase shadow-lg shadow-[#C5A059]/20" onclick="alert('Proceeding to secure vault for payment...')">
+                Complete Purchase
+            </button>
+        </div>
+    </div>
+
+    <footer class="py-20 border-t border-white/5 text-center text-xs tracking-widest text-gray-600 uppercase">
+        <p>&copy; 2026 L'Élite International. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        const menuData = [
+            { id: 1, name: "Beluga Caviar", price: 240, desc: "Classic service with blinis, chives, and crème fraîche.", img: "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?auto=format&fit=crop&w=400&q=80" },
+            { id: 2, name: "Truffle Tagliatelle", price: 65, desc: "Hand-rolled pasta, white Alba truffle, cultured butter.", img: "https://images.unsplash.com/photo-1473093226795-af9932fe5856?auto=format&fit=crop&w=400&q=80" },
+            { id: 3, name: "Miyazaki A5 Wagyu", price: 185, desc: "4oz Center cut, gold leaf, smoked charcoal salt.", img: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=400&q=80" },
+            { id: 4, name: "Blue Lobster", price: 95, desc: "Poached in vanilla butter with asparagus mousse.", img: "https://images.unsplash.com/photo-1559740038-1914a1705389?auto=format&fit=crop&w=400&q=80" },
+            { id: 5, name: "Saffron Risotto", price: 55, desc: "Iranian saffron, edible flowers, 36-month parmesan.", img: "https://images.unsplash.com/photo-1476124369491-e7addf5db371?auto=format&fit=crop&w=400&q=80" },
+            { id: 6, name: "Gold Leaf Opera", price: 35, desc: "Dark chocolate, espresso soak, 24k gold leaf.", img: "https://images.unsplash.com/photo-1509482560494-4126f8225994?auto=format&fit=crop&w=400&q=80" }
+        ];
+
+        let cart = [];
+
+        function renderMenu() {
+            const grid = document.getElementById('menu-grid');
+            grid.innerHTML = menuData.map(item => `
+                <div class="menu-card rounded-sm overflow-hidden group">
+                    <div class="h-64 overflow-hidden">
+                        <img src="${item.img}" alt="${item.name}" class="w-full h-full object-cover group-hover:scale-110 transition duration-700 opacity-80 group-hover:opacity-100">
+                    </div>
+                    <div class="p-8">
+                        <div class="flex justify-between items-start mb-4">
+                            <h4 class="luxury-serif text-xl tracking-wider">${item.name}</h4>
+                            <span class="gold-gradient font-bold">$${item.price}</span>
+                        </div>
+                        <p class="text-gray-500 text-xs leading-relaxed mb-6 uppercase tracking-tighter">${item.desc}</p>
+                        <button onclick="addToCart(${item.id})" class="btn-gold w-full py-3 text-[10px] tracking-widest uppercase font-bold">Add to Selection</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function addToCart(id) {
+            const product = menuData.find(item => item.id === id);
+            cart.push(product);
+            updateUI();
+            // Subtle feedback
+            if(window.innerWidth > 768) toggleCart(true); 
+        }
+
+        function updateUI() {
+            // Update Count
+            document.getElementById('cart-count').innerText = cart.length;
+            
+            // Update List
+            const cartList = document.getElementById('cart-items');
+            cartList.innerHTML = cart.map((item, index) => `
+                <div class="flex justify-between items-center animate-fade">
+                    <div>
+                        <p class="luxury-serif text-sm">${item.name}</p>
+                        <p class="text-[#C5A059] text-xs">$${item.price}</p>
+                    </div>
+                    <button onclick="removeFromCart(${index})" class="text-gray-600 hover:text-white">&times;</button>
+                </div>
+            `).join('');
+
+            // Update Total
+            const total = cart.reduce((acc, curr) => acc + curr.price, 0);
+            document.getElementById('cart-total').innerText = `$${total.toFixed(2)}`;
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateUI();
+        }
+
+        function toggleCart(forceOpen = false) {
+            const sidebar = document.getElementById('cart-sidebar');
+            if(forceOpen) {
+                sidebar.classList.remove('translate-x-full');
+            } else {
+                sidebar.classList.toggle('translate-x-full');
+            }
+        }
+
+        // Initialize
+        renderMenu();
+    </script>
+</body>
+</html>
